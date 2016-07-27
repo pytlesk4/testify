@@ -1,8 +1,9 @@
 package testify
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/pytlesk4/testify/assert"
 )
 
 func TestImports(t *testing.T) {

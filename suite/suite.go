@@ -8,8 +8,8 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
+	"github.com/pytlesk4/testify/assert"
+	"github.com/pytlesk4/testify/require"
 )
 
 var matchMethod = flag.String("m", "", "regular expression to select tests of the suite to run")

@@ -1,8 +1,9 @@
 package http
 
 import (
-	"github.com/stretchr/testify/mock"
 	"net/http"
+
+	"github.com/pytlesk4/testify/mock"
 )
 
 // TestRoundTripper DEPRECATED USE net/http/httptest

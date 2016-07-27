@@ -2,10 +2,11 @@ package mock
 
 import (
 	"errors"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"testing"
 	"time"
+
+	"github.com/pytlesk4/testify/assert"
+	"github.com/pytlesk4/testify/require"
 )
 
 /*
