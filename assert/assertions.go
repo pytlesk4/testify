@@ -763,14 +763,27 @@ func compare(a, b interface{}) op {
 	return op
 }
 
-func LessThan(t TestingT, expected, actual interface{}, msgAndArgs ...interface{}) bool {
+func isComparable(expected, actual interface{}) bool {
 	aok := isNumber(expected)
 	bok := isNumber(actual)
 
 	if !aok || !bok {
-		if reflect.TypeOf(expected).Kind() != reflect.String || reflect.TypeOf(actual).Kind() != reflect.String {
-			return Fail(t, fmt.Sprintf("Expected and Actual are not comparable, both should be numerical or a string"), msgAndArgs...)
+		eType := reflect.TypeOf(expected)
+		aType := reflect.TypeOf(actual)
+		if aType == nil || eType == nil {
+			return false
 		}
+
+		if eType.Kind() != reflect.String || aType.Kind() != reflect.String {
+			return false
+		}
+	}
+	return true
+}
+
+func LessThan(t TestingT, expected, actual interface{}, msgAndArgs ...interface{}) bool {
+	if !isComparable(expected, actual) {
+		return Fail(t, fmt.Sprintf("Expected and Actual are not comparable, both should be numerical or a string"), msgAndArgs...)
 	}
 
 	res := compare(expected, actual)
@@ -783,13 +796,8 @@ func LessThan(t TestingT, expected, actual interface{}, msgAndArgs ...interface{
 }
 
 func LessThanOrEqual(t TestingT, expected, actual interface{}, msgAndArgs ...interface{}) bool {
-	aok := isNumber(expected)
-	bok := isNumber(actual)
-
-	if !aok || !bok {
-		if reflect.TypeOf(expected).Kind() != reflect.String || reflect.TypeOf(actual).Kind() != reflect.String {
-			return Fail(t, fmt.Sprintf("Expected and Actual are not comparable, both should be numerical or a string"), msgAndArgs...)
-		}
+	if !isComparable(expected, actual) {
+		return Fail(t, fmt.Sprintf("Expected and Actual are not comparable, both should be numerical or a string"), msgAndArgs...)
 	}
 
 	res := compare(expected, actual)
@@ -801,13 +809,8 @@ func LessThanOrEqual(t TestingT, expected, actual interface{}, msgAndArgs ...int
 }
 
 func GreaterThan(t TestingT, expected, actual interface{}, msgAndArgs ...interface{}) bool {
-	aok := isNumber(expected)
-	bok := isNumber(actual)
-
-	if !aok || !bok {
-		if reflect.TypeOf(expected).Kind() != reflect.String || reflect.TypeOf(actual).Kind() != reflect.String {
-			return Fail(t, fmt.Sprintf("Expected and Actual are not comparable, both should be numerical or a string"), msgAndArgs...)
-		}
+	if !isComparable(expected, actual) {
+		return Fail(t, fmt.Sprintf("Expected and Actual are not comparable, both should be numerical or a string"), msgAndArgs...)
 	}
 
 	res := compare(expected, actual)
@@ -819,13 +822,8 @@ func GreaterThan(t TestingT, expected, actual interface{}, msgAndArgs ...interfa
 }
 
 func GreaterThanOrEqual(t TestingT, expected, actual interface{}, msgAndArgs ...interface{}) bool {
-	aok := isNumber(expected)
-	bok := isNumber(actual)
-
-	if !aok || !bok {
-		if reflect.TypeOf(expected).Kind() != reflect.String || reflect.TypeOf(actual).Kind() != reflect.String {
-			return Fail(t, fmt.Sprintf("Expected and Actual are not comparable, both should be numerical or a string"), msgAndArgs...)
-		}
+	if !isComparable(expected, actual) {
+		return Fail(t, fmt.Sprintf("Expected and Actual are not comparable, both should be numerical or a string"), msgAndArgs...)
 	}
 
 	res := compare(expected, actual)
